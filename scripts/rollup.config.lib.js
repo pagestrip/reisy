@@ -1,12 +1,12 @@
 export default {
-  entry: 'src/index.js',
+  entry: "src/index.js",
   external: [
-    'inline-style-prefix-all',
+    "inline-style-prefix-all",
   ],
   sourceMap: true,
-  exports: 'named',
+  exports: "named",
   targets: [{
-    dest: 'index.js',
-    format: 'cjs',
+    dest: "index.js",
+    format: "cjs",
   }],
-};
+}
