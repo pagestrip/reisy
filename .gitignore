@@ -1,0 +1,8 @@
+coverage
+node_modules
+.nyc_output
+index.js
+index.js.map
+plugin.js
+plugin.js.map
+npm-debug.log

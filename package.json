@@ -1,0 +1,54 @@
+{
+  "name": "reisy",
+  "version": "1.0.0",
+  "description": "runtime extendable inline styles",
+  "main": "index.js",
+  "modules.root": "src",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "index.js",
+    "index.js.map",
+    "plugin.js",
+    "plugin.js.map",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run build:lib && npm run build:plugin",
+    "build:lib": "rollup -c scripts/rollup.config.lib.js",
+    "build:plugin": "rollup -c scripts/rollup.config.plugin.js",
+    "test": "NODE_ENV=test nyc mocha",
+    "lint": "eslint src test",
+    "prepublish": "npm run lint && npm test && npm run build"
+  },
+  "author": "",
+  "license": "LGPL-3.0",
+  "nyc": {
+    "include": [
+      "src"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-plugin-istanbul": "^1.0.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-register": "^6.9.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.0.0",
+    "eslint-config-swatinem": "^2.2.0",
+    "mocha": "^2.5.3",
+    "normalize.css": "^4.2.0",
+    "nyc": "^6.6.1",
+    "rollup": "^0.33.0"
+  },
+  "dependencies": {
+    "inline-style-prefix-all": "^2.0.2",
+    "postcss": "^5.0.21"
+  }
+}

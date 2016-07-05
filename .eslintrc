@@ -1,0 +1,7 @@
+{
+  "extends": ["swatinem"],
+  "rules": {
+  },
+  "globals": {
+  },
+}
