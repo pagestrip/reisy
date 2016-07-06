@@ -1,5 +1,5 @@
 import {ClassName, stringifyRules} from "./helpers.js"
-import {decl} from "./index.js"
+import {decl} from "./types.js"
 import prefix from "inline-style-prefix-all"
 import toposort from "./toposort.js"
 

@@ -1,4 +1,4 @@
-import {decl, multidecl, rule, keyframes/*, font*/, node} from "../index.js"
+import {decl, multidecl, rule, keyframes/*, font*/, node} from "../types.js"
 import postcss from "postcss"
 
 // TODO:
@@ -14,7 +14,8 @@ function convertRoot(root) {
   let ns = ""
   // let fonts = Object.create(null);
   const nodes = []
-  for (const n of root.nodes) {
+  for (let i = 0; i < root.nodes.length; i++) {
+    const n = root.nodes[i]
     const {type} = n
     const global = {
       deps: new Set(),
@@ -82,13 +83,15 @@ function convertNode(global, node) {
   const defs = []
   const parents = []
   const defMap = Object.create(null)
-  for (const n of node.nodes) {
+  for (let i = 0; i < node.nodes.length; i++) {
+    const n = node.nodes[i]
     if (n.type === "comment") {
       continue
     }
     if (n.type === "atrule" && n.name === "extends") {
-      for (let name of n.params.split(",")) {
-        name = name.trim()
+      const params = n.params.split(",")
+      for (let i = 0; i < params.length; i++) {
+        const name = params[i].trim()
         parents.push(makeDep(global, name))
       }
       continue

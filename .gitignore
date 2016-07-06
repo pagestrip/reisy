@@ -1,8 +1,6 @@
 coverage
 node_modules
 .nyc_output
-index.js
-index.js.map
-plugin.js
-plugin.js.map
+/index.js*
+/plugin.js*
 npm-debug.log
