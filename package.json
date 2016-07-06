@@ -32,12 +32,17 @@
       "babel-register"
     ],
     "sourceMap": false,
-    "instrument": false
+    "instrument": false,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-plugin-istanbul": "^1.0.2",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.10.3",
+    "babel-preset-es2015-rollup": "^1.1.1",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
     "eslint": "^3.0.0",
@@ -45,7 +50,8 @@
     "mocha": "^2.5.3",
     "normalize.css": "^4.2.0",
     "nyc": "^6.6.1",
-    "rollup": "^0.33.0"
+    "rollup": "^0.33.0",
+    "rollup-plugin-babel": "^2.6.1"
   },
   "dependencies": {
     "inline-style-prefix-all": "^2.0.2",

@@ -2,6 +2,17 @@
 
 > runtime extendable inline styles
 
+[![Build status][travis-image]][travis-url]
+[![Test coverage][codecov-image]][codecov-url]
+[![Dependency Status][david-image]][david-url]
+
+[travis-image]: https://img.shields.io/travis/pagestrip/reisy.svg?style=flat-square
+[travis-url]: https://travis-ci.org/pagestrip/reisy
+[codecov-image]: https://img.shields.io/codecov/c/github/pagestrip/reisy.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/pagestrip/reisy
+[david-image]: http://img.shields.io/david/pagestrip/reisy.svg?style=flat-square
+[david-url]: https://david-dm.org/pagestrip/reisy
+
 reisy is a system to define stylesheets. But it can do a lot more. Read the
 following examples to find out what’s in store for you.
 
