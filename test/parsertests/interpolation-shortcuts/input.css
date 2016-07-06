@@ -1,0 +1,11 @@
+@namespace Foo;
+Foo: foo;
+
+Bar {
+  foobar: $(Foo)bar;
+}
+Foobar {
+  @extends Bar;
+  foo-bar: $Foo bar;
+  foo: $Foo;
+}

@@ -1,0 +1,11 @@
+@namespace Header;
+
+Container {
+  height: 100px;
+}
+
+@namespace;
+
+html {
+  min-height: 100%;
+}

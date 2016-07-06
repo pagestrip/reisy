@@ -1,0 +1,8 @@
+@namespace Header;
+Container {
+  top: 0;
+  top: 1px;
+  position: absolute;
+  position: fixed;
+  position: sticky;
+}

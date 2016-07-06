@@ -1,0 +1,8 @@
+{
+  "name": "extend another rule",
+  "namespaces": {
+    "Header": {
+      "Container": "Helpers-AbsFull Header-Container"
+    }
+  }
+}

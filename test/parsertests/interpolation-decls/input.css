@@ -1,0 +1,4 @@
+@namespace Consts;
+
+FooBar: Foo$(Consts.Bar);
+Bar: Bar;

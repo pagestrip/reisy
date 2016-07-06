@@ -1,0 +1,8 @@
+{
+  "name": "don’t add a parent twice when overriding",
+  "namespaces": {
+    "Header": {
+      "Container": "Helpers-AbsFull Header-Container"
+    }
+  }
+}

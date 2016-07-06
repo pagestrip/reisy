@@ -1,0 +1,6 @@
+html {
+  @media foo {
+    margin-left: 0;
+    padding: 0;
+  }
+}

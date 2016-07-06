@@ -1,0 +1,16 @@
+@namespace Fonts;
+@font-face Default {
+  src: url(normal.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face Default {
+  src: url(bold.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@namespace Header;
+Container {
+  font-family: $Fonts.Default;
+}

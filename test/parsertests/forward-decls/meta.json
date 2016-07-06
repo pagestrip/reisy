@@ -1,0 +1,9 @@
+{
+  "name": "forward declaration types",
+  "namespaces": {
+    "Foo": {
+      "Foo": true,
+      "Bar": 3.14
+    }
+  }
+}

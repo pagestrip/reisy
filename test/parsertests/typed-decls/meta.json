@@ -1,0 +1,10 @@
+{
+  "name": "declarations with boolean or number type",
+  "namespaces": {
+    "Consts": {
+      "True": true,
+      "False": false,
+      "PI": 3.14
+    }
+  }
+}

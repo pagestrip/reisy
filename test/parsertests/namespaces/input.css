@@ -1,0 +1,9 @@
+@namespace Consts;
+
+Foo: Foo;
+
+@namespace Header;
+
+Container {
+  margin: 0;
+}

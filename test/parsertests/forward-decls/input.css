@@ -1,0 +1,10 @@
+@namespace Consts;
+
+True: true;
+False: false;
+PI: 3.14;
+
+@namespace Foo;
+
+Foo: $Consts.True;
+Bar: $Consts.PI;

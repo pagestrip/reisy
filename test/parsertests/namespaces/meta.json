@@ -1,0 +1,11 @@
+{
+  "name": "expose namespaced constant values and classNames",
+  "namespaces": {
+    "Consts": {
+      "Foo": "Foo"
+    },
+    "Header": {
+      "Container": "Header-Container"
+    }
+  }
+}

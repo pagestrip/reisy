@@ -1,0 +1,9 @@
+{
+  "name": "interpolation for declarations",
+  "namespaces": {
+    "Consts": {
+      "FooBar": "FooBar",
+      "Bar": "Bar"
+    }
+  }
+}

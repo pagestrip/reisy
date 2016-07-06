@@ -1,0 +1,6 @@
+.Header-Container:hover {
+  cursor: pointer;
+}
+.Header-Container::before, .Header-Container::after {
+  display: block;
+}

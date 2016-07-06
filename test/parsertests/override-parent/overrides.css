@@ -1,0 +1,6 @@
+@namespace Header;
+
+Container {
+  @extends Helpers.AbsFull;
+  font-size: 2em;
+}

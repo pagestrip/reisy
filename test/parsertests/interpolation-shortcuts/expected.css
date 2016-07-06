@@ -1,0 +1,7 @@
+.Foo-Bar {
+  foobar: foobar;
+}
+.Foo-Foobar {
+  foo-bar: foo bar;
+  foo: foo;
+}

@@ -1,0 +1,9 @@
+@namespace Header;
+Container {
+  &:hover {
+    cursor: pointer;
+  }
+  &::before, &::after {
+    display: block;
+  }
+}

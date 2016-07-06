@@ -1,0 +1,7 @@
+@namespace Consts;
+Prop: content;
+
+@namespace Header;
+Container {
+  $Consts.Prop: "$Consts.Prop";
+}

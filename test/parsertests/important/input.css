@@ -1,0 +1,10 @@
+@namespace Foo;
+Bar: foobar;
+
+@namespace;
+
+.foo,
+.bar {
+  bar: foobar !important;
+  foo: $Foo.Bar !important;
+}

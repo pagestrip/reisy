@@ -1,0 +1,9 @@
+{
+  "skip": true,
+  "name": "@font-face rules",
+  "namespaces": {
+    "Fonts": {
+      "Default": "Fonts-Default"
+    }
+  }
+}
