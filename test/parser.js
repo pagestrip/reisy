@@ -86,7 +86,7 @@ function createTest(dir) {
 }
 
 describe("Parser/Plugin", () => {
-  const cases = fs.readdirSync(TESTCASES)
+  const cases = fs.readdirSync(TESTCASES).filter(f => (f.indexOf('.') !== 0))
   afterEach(() => reisy.reset())
   cases.forEach(createTest)
 })

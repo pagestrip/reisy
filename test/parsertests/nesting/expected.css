@@ -1,0 +1,12 @@
+.foo, .bar {
+  display: block;
+}
+.foo.baz, .bar.baz {
+  color: #fff;
+}
+.Foobar-foo, .Foobar-bar {
+  display: block;
+}
+.Foobar-foo.baz, .Foobar-bar.baz {
+  color: #fff;
+}

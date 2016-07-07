@@ -1,0 +1,19 @@
+@namespace;
+
+.foo, .bar {
+  display: block;
+
+  &.baz {
+    color: #fff;
+  }
+}
+
+@namespace Foobar;
+
+.foo, .bar {
+  display: block;
+
+  &.baz {
+    color: #fff;
+  }
+}
