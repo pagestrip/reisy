@@ -7,6 +7,8 @@ export default function parse(source) {
   return converted
 }
 
+const VALID_ATRULES = new Set(["namespace", "keyframes", "font-face"])
+
 function convertRoot(root) {
   let ns = ""
   let fonts = Object.create(null)
@@ -18,13 +20,13 @@ function convertRoot(root) {
       deps: new Set(),
       ns,
     }
+    if (type === "comment" ||
+        (type === "atrule" && !VALID_ATRULES.has(n.name))) {
+      continue
+    }
     if (type === "atrule" && n.name === "namespace") {
       finishFonts()
       ns = n.params || ""
-      continue
-    }
-
-    if (type === "comment") {
       continue
     }
 
@@ -39,7 +41,8 @@ function convertRoot(root) {
     } else if (n.name === "keyframes") {
       name = n.params
       value = keyframes(value.defs)
-    } else if (n.name === "font-face") {
+    } else {
+      // guaranteed to be @font-face
       const name = n.params
       if (!fonts[name]) {
         fonts[name] = {
