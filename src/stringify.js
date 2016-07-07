@@ -1,40 +1,16 @@
-const __DEV__ = process.env.NODE_ENV !== "production"
-// pretty print settings
-const IND = __DEV__ ? "  " : "" // indent
-const NL = __DEV__ ? "\n" : "" // newline
-const SP = __DEV__ ? " " : "" // space
-
-export const ClassName = node => {
-  const {ns, name} = node
-  if (!ns) {
-    return name
-  }
-  const className = `${ns}-${name}`
-  if (__DEV__) {
-    return className
-  }
-
-  // create a tiny hash of the className, just to save some bytes :-)
-  let value = 5381
-  let i = className.length
-
-  while (i) {
-    value = (value * 33) ^ className.charCodeAt(--i)
-  }
-
-  return `_${(value >>> 0).toString(36)}`
-}
-
-export function stringifyRules(rules) {
+export default function stringifyRules(rules, pretty) {
+  const NL = pretty ? "\n" : "" // newline
   const lines = []
   for (let i = 0; i < rules.length; i++) {
     const rule = rules[i]
-    stringifyRule(lines, rule.selector, rule.def)
+    stringifyRule(pretty, lines, rule.selector, rule.def)
   }
   return lines.join(NL)
 }
 
-function stringifyRule(lines, selector, defs, indent = "") {
+function stringifyRule(pretty, lines, selector, defs, indent = "") {
+  const IND = pretty ? "  " : "" // indent
+  const SP = pretty ? " " : "" // space
   const chindent = `${indent}${IND}`
   const keys = Object.keys(defs)
   if (!keys.length) { return }
@@ -49,7 +25,7 @@ function stringifyRule(lines, selector, defs, indent = "") {
         lines.push(`${chindent}${prop}:${SP}${val};`)
       }
     } else if (typeof value === "object") {
-      stringifyRule(lines, name, value, chindent)
+      stringifyRule(pretty, lines, name, value, chindent)
     } else {
       lines.push(`${chindent}${prop}:${SP}${value};`)
     }

@@ -55,18 +55,33 @@ function createTest(dir) {
     try {
       expected = read("expected.css").trim()
     } catch (e) {}
-    const expectedNs = meta.namespaces || {}
-
-    const ns = Object.keys(expectedNs).reduce((obj, ns) => {
-      obj[ns] = reisy.namespace(ns)
-      return obj
-    }, {})
 
     reisy.nodes(nodes)
     reisy.overrides(overrides)
+    reisy.pretty(true)
     const output = reisy.resolve()
+
     expect(output).to.eql(expected)
-    expect(ns).to.eql(expectedNs)
+    Object.keys(meta.namespaces || {}).forEach(ns => {
+      expect(reisy.namespace(ns)).to.eql(meta.namespaces[ns])
+    })
+
+    expected = ""
+    try {
+      expected = read("expected.min.css").trim()
+    } catch (e) {}
+    if (expected || meta.namespaces_min) {
+      reisy.reset()
+      reisy.nodes(nodes)
+      reisy.overrides(overrides)
+      reisy.pretty(false)
+      const output = reisy.resolve()
+
+      expect(output).to.eql(expected)
+      Object.keys(meta.namespaces_min || {}).forEach(ns => {
+        expect(reisy.namespace(ns)).to.eql(meta.namespaces_min[ns])
+      })
+    }
   }
 }
 

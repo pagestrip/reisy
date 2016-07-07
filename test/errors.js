@@ -1,4 +1,5 @@
-import Reisy, {node, rule, decl} from "../src/"
+import Reisy from "../src/"
+import {node, rule, decl} from "../src/types.js"
 import {expect} from "chai"
 
 describe("Errors", () => {

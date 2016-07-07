@@ -19,14 +19,14 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run build:lib && npm run build:cli && npm run build:plugin",
+    "build": "npm run build:lib && npm run build:cli && npm run build:plugin",
     "build:cli": "rollup -c scripts/rollup.config.cli.js",
     "build:lib": "rollup -c scripts/rollup.config.lib.js",
     "build:plugin": "rollup -c scripts/rollup.config.plugin.js",
     "clean": "rm -rf index.js* plugin.js* bin",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint src test scripts",
-    "prepublish": "npm run lint && npm test && npm run build"
+    "prepublish": "npm run lint && npm test && npm run clean && npm run build"
   },
   "author": "",
   "license": "LGPL-3.0",

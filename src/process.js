@@ -1,4 +1,4 @@
-import {ClassName, stringifyRules} from "./helpers.js"
+import stringify from "./stringify.js"
 import {decl} from "./types.js"
 import prefix from "inline-style-prefix-all"
 import toposort from "./toposort.js"
@@ -6,10 +6,11 @@ import toposort from "./toposort.js"
 const __DEV__ = process.env.NODE_ENV !== "production"
 
 class Processor {
-  constructor({_nodes, _overrides, _namespaces}) {
+  constructor({_nodes, _overrides, _namespaces, _pretty}) {
     this.nodes = _nodes
     this.overrides = _overrides
     this.namespaces = _namespaces
+    this.pretty = _pretty
     this.rules = []
     this.registry = Object.create(null)
   }
@@ -38,10 +39,31 @@ class Processor {
     }
 
     // 4. serialize the rules to css
-    const css = stringifyRules(rules)
+    const css = stringify(rules, this.pretty)
 
     return css
   }
+}
+
+function ClassName({pretty}, node) {
+  const {ns, name} = node
+  if (!ns) {
+    return name
+  }
+  const className = `${ns}-${name}`
+  if (pretty) {
+    return className
+  }
+
+  // create a tiny hash of the className, just to save some bytes :-)
+  let value = 5381
+  let i = className.length
+
+  while (i) {
+    value = (value * 33) ^ className.charCodeAt(--i)
+  }
+
+  return `_${(value >>> 0).toString(36)}`
 }
 
 let ANONYMOUS = 0
@@ -106,7 +128,7 @@ function processNode(output, node) {
   let value
 
   if (type === "rule") {
-    const className = ClassName(node)
+    const className = ClassName(output, node)
     value = {
       selector: `${node.ns ? "." : ""}${className}`,
       className,
@@ -121,7 +143,7 @@ function processNode(output, node) {
       processRule(output, rule, def.defs)
     }
   } else if (type === "font") {
-    value = ClassName(node)
+    value = ClassName(output, node)
     // attach the font name using a temporary property here…
     def.defs.forEach(def => {
       def.unshift(["fontFamily", decl(value)])
@@ -129,12 +151,12 @@ function processNode(output, node) {
       def.shift()
     })
   } else if (type === "keyframes") {
-    value = ClassName(node)
+    value = ClassName(output, node)
     processNestedRule(output, `@keyframes ${value}`, def.defs)
     // and then there is old webkits :-(
     processNestedRule(output, `@-webkit-keyframes ${value}`, def.defs)
   } else {
-    value = interpolate(registry, def.type ? def.value : def)
+    value = interpolate(registry, def.value)
   }
   registry[key] = value
   if (ns) {
@@ -205,7 +227,7 @@ function processRule(output, rule, defs) {
     } else {
       const value = type === "multidecl"
         ? def.values.map(value => interpolate(output.registry, value))
-        : interpolate(output.registry, def.type ? def.value : def)
+        : interpolate(output.registry, def)
       rule.def[camelify(name)] = value
     }
   }
