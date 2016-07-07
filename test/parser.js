@@ -1,8 +1,8 @@
 import {reisy} from "../src/"
 import {transform} from "babel-core"
 import {expect} from "chai"
-import plugin from "../src/plugin"
-import parse from "../src/plugin/parser.js"
+import plugin from "../src/plugin.js"
+import parse from "../src/parser.js"
 import fs from "fs"
 import path from "path"
 

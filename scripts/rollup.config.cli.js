@@ -6,15 +6,23 @@ const plugins = [
   }),
 ]
 
+const banner = `#!/usr/bin/env node
+
+require('source-map-support').install();
+`
+
 export default {
-  entry: "src/plugin.js",
+  entry: "src/cli.js",
   external: [
+    "fs", "path",
     "postcss",
+    "source-map-support",
   ],
   sourceMap: true,
+  banner,
   plugins,
   targets: [{
-    dest: "plugin.js",
+    dest: "bin/reisy.js",
     format: "cjs",
   }],
 }

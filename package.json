@@ -7,7 +7,11 @@
   "directories": {
     "test": "test"
   },
+  "bin": {
+    "reisy": "./bin/reisy.js"
+  },
   "files": [
+    "bin",
     "index.js",
     "index.js.map",
     "plugin.js",
@@ -15,9 +19,11 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run build:lib && npm run build:plugin",
+    "build": "npm run clean && npm run build:lib && npm run build:cli && npm run build:plugin",
+    "build:cli": "rollup -c scripts/rollup.config.cli.js",
     "build:lib": "rollup -c scripts/rollup.config.lib.js",
     "build:plugin": "rollup -c scripts/rollup.config.plugin.js",
+    "clean": "rm -rf index.js* plugin.js* bin",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint src test scripts",
     "prepublish": "npm run lint && npm test && npm run build"
@@ -54,6 +60,7 @@
   },
   "dependencies": {
     "inline-style-prefix-all": "^2.0.2",
-    "postcss": "^5.0.21"
+    "postcss": "^5.0.21",
+    "source-map-support": "^0.4.1"
   }
 }

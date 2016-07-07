@@ -1,4 +1,4 @@
-import {decl, multidecl, rule, keyframes, font, node} from "../types.js"
+import {decl, multidecl, rule, keyframes, font, node} from "./types.js"
 import postcss from "postcss"
 
 export default function parse(source) {
