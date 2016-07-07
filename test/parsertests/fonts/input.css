@@ -6,11 +6,28 @@
 }
 @font-face Default {
   src: url(bold.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@namespace Fonts2;
+@font-face Default {
+  src: url($(Base)normal.woff) format('woff');
   font-weight: normal;
   font-style: normal;
 }
+@font-face Default {
+  src: url($(Base)bold.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+Base: foo/;
 
 @namespace Header;
 Container {
   font-family: $Fonts.Default;
+}
+Container2 {
+  font-family: $Fonts2.Default;
 }

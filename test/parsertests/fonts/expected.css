@@ -1,15 +1,30 @@
 @font-face {
   font-family: Fonts-Default;
-  src: url(normal.woff) format(\'woff\');
+  src: url(normal.woff) format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: Fonts-Default;
-  src: url(bold.woff) format(\'woff\');
+  src: url(bold.woff) format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: Fonts2-Default;
+  src: url(foo/normal.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Fonts2-Default;
+  src: url(foo/bold.woff) format('woff');
   font-weight: bold;
   font-style: normal;
 }
 .Header-Container {
   font-family: Fonts-Default;
+}
+.Header-Container2 {
+  font-family: Fonts2-Default;
 }

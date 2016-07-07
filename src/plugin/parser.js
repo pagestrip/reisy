@@ -1,8 +1,5 @@
-import {decl, multidecl, rule, keyframes/*, font*/, node} from "../types.js"
+import {decl, multidecl, rule, keyframes, font, node} from "../types.js"
 import postcss from "postcss"
-
-// TODO:
-// * handle fonts
 
 export default function parse(source) {
   const root = postcss.parse(source)
@@ -12,7 +9,7 @@ export default function parse(source) {
 
 function convertRoot(root) {
   let ns = ""
-  // let fonts = Object.create(null);
+  let fonts = Object.create(null)
   const nodes = []
   for (let i = 0; i < root.nodes.length; i++) {
     const n = root.nodes[i]
@@ -22,6 +19,7 @@ function convertRoot(root) {
       ns,
     }
     if (type === "atrule" && n.name === "namespace") {
+      finishFonts()
       ns = n.params || ""
       continue
     }
@@ -41,14 +39,37 @@ function convertRoot(root) {
     } else if (n.name === "keyframes") {
       name = n.params
       value = keyframes(value.defs)
-    } else {
-      // TODO: handle fonts
+    } else if (n.name === "font-face") {
+      const name = n.params
+      if (!fonts[name]) {
+        fonts[name] = {
+          deps: new Set(),
+          defs: [],
+        }
+      }
+      for (const dep of global.deps) {
+        fonts[name].deps.add(dep)
+      }
+      fonts[name].defs.push(value.defs)
+      continue
     }
     nodes.push(node(ns, name, [...global.deps], value))
+    global.deps.clear()
   }
+  finishFonts()
   return {
     namespace: ns,
     nodes,
+  }
+
+  function finishFonts() {
+    const fontnames = Object.keys(fonts)
+    for (let i = 0; i < fontnames.length; i++) {
+      const name = fontnames[i]
+      const def = fonts[name]
+      nodes.push(node(ns, name, [...def.deps], font(...def.defs)))
+    }
+    fonts = Object.create(null)
   }
 }
 
