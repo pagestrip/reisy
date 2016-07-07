@@ -1,0 +1,9 @@
+{
+  "name": "override declarations",
+  "namespaces": {
+    "Consts": {
+      "FooBar": "FooFoo",
+      "Bar": "Foo"
+    }
+  }
+}

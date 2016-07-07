@@ -1,0 +1,7 @@
+@namespace Fonts;
+
+@font-face Default {
+  src: url(override.woff) format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

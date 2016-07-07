@@ -1,0 +1,20 @@
+@keyframes Anim-Foo {
+  0% {
+    width: 100px;
+  }
+  100% {
+    width: 200px;
+  }
+}
+@-webkit-keyframes Anim-Foo {
+  0% {
+    width: 100px;
+  }
+  100% {
+    width: 200px;
+  }
+}
+.Header-Container {
+  animation: Anim-Foo 1s infinite linear;
+  -webkit-animation: Anim-Foo 1s infinite linear;
+}

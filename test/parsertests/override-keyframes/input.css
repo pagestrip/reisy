@@ -1,0 +1,16 @@
+@namespace Anim;
+
+@keyframes Foo {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 0px;
+  }
+}
+
+@namespace Header;
+
+Container {
+  animation: $Anim.Foo 1s infinite linear;
+}

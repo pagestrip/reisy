@@ -1,0 +1,12 @@
+@namespace Helpers;
+
+Pointer {
+  cursor: pointer;
+}
+
+@namespace Header;
+
+Container {
+  @extends Helpers.Pointer;
+  position: sticky;
+}

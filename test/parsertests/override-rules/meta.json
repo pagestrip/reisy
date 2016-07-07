@@ -1,0 +1,8 @@
+{
+  "name": "override and extend existing rule",
+  "namespaces": {
+    "Header": {
+      "Container": "Helpers-Pointer Helpers-AbsFull Header-Container"
+    }
+  }
+}
