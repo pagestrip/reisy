@@ -1,0 +1,11 @@
+{
+  "name": "error when mixing types in overrides",
+  "errors": [
+    "reisy: Incompatible types for node \"Foo.Bar\": got \"rule\" expected \"decl\"."
+  ],
+  "namespaces": {
+    "Foo": {
+      "Bar": "Bar"
+    }
+  }
+}

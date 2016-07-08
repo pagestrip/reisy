@@ -1,0 +1,12 @@
+{
+  "name": "error when specifying a circular dependency",
+  "errors": [
+    "reisy: Node \"Foo.Foo\" is part of a cyclic dependency."
+  ],
+  "namespaces": {
+    "Foo": {
+      "Bar": "",
+      "Foo": ""
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "error when extending a non-existant rule",
+  "errors": [
+    "reisy: Invalid dependency on \"Foo.Foo\". A typo maybe?",
+    "reisy: \"Foo.Bar\" extends non-existant \"Foo.Foo\". A typo maybe?"
+  ],
+  "namespaces": {
+    "Foo": {
+      "Bar": "Foo-Bar"
+    }
+  }
+}

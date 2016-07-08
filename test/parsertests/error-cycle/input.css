@@ -1,0 +1,4 @@
+@namespace Foo;
+
+Foo: $Bar;
+Bar: $Foo;

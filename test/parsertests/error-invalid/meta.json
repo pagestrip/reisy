@@ -1,0 +1,11 @@
+{
+  "name": "error when specifying an invalid dependency",
+  "errors": [
+    "reisy: Invalid dependency on \"Foo.Bar\". A typo maybe?"
+  ],
+  "namespaces": {
+    "Foo": {
+      "Foo": ""
+    }
+  }
+}

@@ -18,11 +18,13 @@ function toposort(nodes) {
 function visit(sorted, nodes, marks, key) {
   const node = nodes[key]
   if (!node) {
-    throw new Error(`Invalid dependency on "${key}". A typo maybe?`)
+    console.error(new Error(`reisy: Invalid dependency on "${key}". A typo maybe?`))
+    return
   }
   if (marks[key] === TEMP) {
-    throw new Error(`Node "${key}" is part of a cyclic dependency.`)
-  } else if (marks[key]) {
+    console.error(new Error(`reisy: Node "${key}" is part of a cyclic dependency.`))
+  }
+  if (marks[key]) {
     return
   }
 

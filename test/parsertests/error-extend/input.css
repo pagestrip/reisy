@@ -1,0 +1,6 @@
+@namespace Foo;
+
+Bar {
+  @extends Foo;
+  foo: foo;
+}

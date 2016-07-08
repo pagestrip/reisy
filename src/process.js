@@ -3,8 +3,6 @@ import {decl} from "./types.js"
 import prefix from "inline-style-prefix-all"
 import toposort from "./toposort.js"
 
-const __DEV__ = process.env.NODE_ENV !== "production"
-
 class Processor {
   constructor({_nodes, _overrides, _namespaces, _pretty}) {
     this.nodes = _nodes
@@ -98,13 +96,9 @@ function processTypeDef(_def, olddef, key) {
     : _def
   const {type} = def
   if (olddef && type !== olddef.type) {
-    const err = new Error(`Incompatible types for node "${key}": "${type}" and "${olddef.type}".`)
-    if (__DEV__) {
-      throw err
-    } else {
-      console.error(err)
-      return
-    }
+    console.error(
+      new Error(`reisy: Incompatible types for node "${key}": got "${type}" expected "${olddef.type}".`))
+    return
   }
   if (type !== "rule") { return def }
   const {parents, defs} = def
@@ -163,7 +157,9 @@ function processNode(output, node) {
     if (!namespaces[ns]) {
       namespaces[ns] = Object.create(null)
     }
-    namespaces[ns][name] = value.className || value
+    namespaces[ns][name] = (value && typeof value === "object")
+      ? value.className
+      : value
   }
   return value
 }
@@ -174,10 +170,11 @@ function processParents(output, seen, value, parents, nodekey) {
     if (seen[key]) { continue }
     seen[key] = true
     const parent = output.registry[key]
-    if (!parent) {
-      throw new Error(`"${nodekey}" extends non-existant "${key}". A typo maybe?`)
+    if (parent) {
+      value.className = `${parent.className} ${value.className}`
+    } else {
+      console.error(new Error(`reisy: "${nodekey}" extends non-existant "${key}". A typo maybe?`))
     }
-    value.className = `${parent.className} ${value.className}`
     seen[key] = true
   }
 }
@@ -241,9 +238,16 @@ function interpolate(registry, parts) {
     return parts
   }
   if (parts.length === 2 && !parts[0]) {
-    return registry[parts[1]]
+    return noundef(registry[parts[1]])
   }
-  return parts.map((part, i) => i % 2 === 0 ? String(part) : registry[part]).join("").trim()
+  return parts.map((part, i) => i % 2 === 0
+    ? String(part)
+    : noundef(registry[part])
+  ).join("").trim()
+}
+
+function noundef(arg) {
+  return typeof arg === "undefined" ? "" : arg
 }
 
 function camelify(str) {

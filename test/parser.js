@@ -55,6 +55,9 @@ function createTest(dir) {
     try {
       expected = read("expected.css").trim()
     } catch (e) {}
+    const error = console.error
+    const errors = []
+    console.error = err => errors.push(err.message)
 
     reisy.nodes(nodes)
     reisy.overrides(overrides)
@@ -65,6 +68,7 @@ function createTest(dir) {
     Object.keys(meta.namespaces || {}).forEach(ns => {
       expect(reisy.namespace(ns)).to.eql(meta.namespaces[ns])
     })
+    expect(errors).to.eql(meta.errors || [])
 
     expected = ""
     try {
@@ -82,12 +86,17 @@ function createTest(dir) {
         expect(reisy.namespace(ns)).to.eql(meta.namespaces_min[ns])
       })
     }
+    console.error = error
   }
 }
 
 describe("Parser/Plugin", () => {
   const cases = fs.readdirSync(TESTCASES)
     .filter(f => !f.startsWith("."))
-  afterEach(() => reisy.reset())
+  const error = console.error
+  afterEach(() => {
+    console.error = error
+    reisy.reset()
+  })
   cases.forEach(createTest)
 })
