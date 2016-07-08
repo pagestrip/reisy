@@ -4,9 +4,9 @@
 .foo.baz, .bar.baz {
   color: #fff;
 }
-.Foobar-foo, .Foobar-bar {
+.Foo-Bar .foo, .Foo-Bar .bar {
   display: block;
 }
-.Foobar-foo.baz, .Foobar-bar.baz {
+.Foo-Bar .foo.baz, .Foo-Bar .bar.baz {
   color: #fff;
 }

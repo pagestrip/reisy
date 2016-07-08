@@ -217,12 +217,15 @@ function processRule(output, rule, defs) {
         processNestedRule(output, name, defs, createRule(rule.selector))
         continue
       }
-      const selector = name.split(",").map(_name => {
-        const name = _name.trim()
-        return name.startsWith("&")
-          ? `${rule.selector}${name.substring(1)}`
-          : `${rule.selector} ${name}`
-      }).join(", ")
+      const selector = rule.selector.split(",").reduce((arr, _selector) => {
+        const selector = _selector.trim()
+        return arr.concat(name.split(",").map(_name => {
+          const name = _name.trim()
+          return name.startsWith("&")
+            ? `${selector}${name.substring(1)}`
+            : `${selector} ${name}`
+        }))
+      }, []).join(", ")
       processRule(output, createRule(selector), defs)
     } else {
       const value = type === "multidecl"

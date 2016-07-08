@@ -8,12 +8,14 @@
   }
 }
 
-@namespace Foobar;
+@namespace Foo;
 
-.foo, .bar {
-  display: block;
+Bar {
+  .foo, .bar {
+    display: block;
 
-  &.baz {
-    color: #fff;
+    &.baz {
+      color: #fff;
+    }
   }
 }
