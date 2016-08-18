@@ -1,4 +1,4 @@
-import prefix from "inline-style-prefix-all"
+import prefix from "inline-style-prefixer/static"
 import {reisy} from "./index.js"
 
 export function use(...args) {

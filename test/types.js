@@ -241,9 +241,9 @@ describe("Typed API", () => {
   flex-shrink: 0;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
+  -webkit-flex-shrink: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
 }`)
   })

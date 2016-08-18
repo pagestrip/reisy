@@ -11,7 +11,7 @@ class Reisy {
     this._overrides = []
     this._namespaces = Object.create(null)
     this._listeners = new Set()
-    this._pretty = process && process.env.NODE_ENV !== "production"
+    this._pretty = process.env.NODE_ENV !== "production"
     return this
   }
 

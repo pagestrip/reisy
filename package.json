@@ -1,6 +1,6 @@
 {
   "name": "reisy",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "runtime extendable inline styles",
   "main": "index.js",
   "modules.root": "src",
@@ -59,7 +59,7 @@
     "rollup-plugin-babel": "^2.6.1"
   },
   "dependencies": {
-    "inline-style-prefix-all": "^2.0.2",
+    "inline-style-prefixer": "^2.0.1",
     "postcss": "^5.0.21",
     "source-map-support": "^0.4.1"
   }
