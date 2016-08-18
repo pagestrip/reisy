@@ -1,4 +1,10 @@
 
+1.2.1 / 2016-08-18
+==================
+
+  * switch to inline-style-prefixer/static (#2)
+  * small cleanups / bumping dependencies
+
 1.2.0 / 2016-07-08
 ==================
 
