@@ -1,10 +1,4 @@
-import babel from "rollup-plugin-babel"
-const plugins = [
-  babel({
-    babelrc: false,
-    presets: ["es2015-rollup"],
-  }),
-]
+import plugins from "./plugins.js"
 
 const banner = `#!/usr/bin/env node
 

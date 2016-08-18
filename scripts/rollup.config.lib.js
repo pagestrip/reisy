@@ -1,15 +1,9 @@
-import babel from "rollup-plugin-babel"
-const plugins = [
-  babel({
-    babelrc: false,
-    presets: ["es2015-rollup"],
-  }),
-]
+import plugins from "./plugins.js"
 
 export default {
   entry: "src/index.js",
   external: [
-    "inline-style-prefix-all",
+    "inline-style-prefixer/static",
   ],
   sourceMap: true,
   exports: "named",
