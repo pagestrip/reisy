@@ -1,4 +1,9 @@
 
+1.2.2 / 2016-08-25
+==================
+
+  * support selector placeholders in arbitrary position
+
 1.2.1 / 2016-08-18
 ==================
 
