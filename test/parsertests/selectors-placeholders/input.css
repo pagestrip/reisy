@@ -1,0 +1,11 @@
+@namespace Foo;
+
+Bar {
+  width: 0px;
+  &.foobar1 {
+    width: 1px;
+  }
+  .foobar2 & {
+    width: 2px;
+  }
+}

@@ -194,7 +194,7 @@ function processNestedRule(output, name, defs, _rule) {
   processRule(output, container, defs)
   for (let i = _rule ? 0 : 1; i < output.rules.length; i++) {
     const r = output.rules[i]
-    rule.def[r.selector.substring(_rule ? 0 : 1)] = r.def
+    rule.def[r.selector] = r.def
   }
   output.rules = rules
   output.rules.push(rule)
@@ -217,10 +217,8 @@ function processRule(output, rule, defs) {
       const selector = rule.selector.split(",").reduce((arr, _selector) => {
         const selector = _selector.trim()
         return arr.concat(name.split(",").map(_name => {
-          const name = _name.trim()
-          return name.startsWith("&")
-            ? `${selector}${name.substring(1)}`
-            : `${selector} ${name}`
+          const name = _name.includes("&") ? _name.trim() : `& ${_name.trim()}`
+          return name.replace("&", selector).trim()
         }))
       }, []).join(", ")
       processRule(output, createRule(selector), defs)

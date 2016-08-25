@@ -1,0 +1,9 @@
+.Foo-Bar {
+  width: 0px;
+}
+.Foo-Bar.foobar1 {
+  width: 1px;
+}
+.foobar2 .Foo-Bar {
+  width: 2px;
+}
