@@ -1,0 +1,11 @@
+@namespace Main;
+
+Container {
+}
+
+@namespace Header;
+Container {
+  $Main.Container & {
+    foo: bar;
+  }
+}

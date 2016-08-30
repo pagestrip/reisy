@@ -236,16 +236,17 @@ function interpolate(registry, parts) {
     return parts
   }
   if (parts.length === 2 && !parts[0]) {
-    return noundef(registry[parts[1]])
+    return interpolatedValue(registry[parts[1]])
   }
   return parts.map((part, i) => i % 2 === 0
     ? String(part)
-    : noundef(registry[part])
+    : interpolatedValue(registry[part])
   ).join("").trim()
 }
 
-function noundef(arg) {
-  return typeof arg === "undefined" ? "" : arg
+function interpolatedValue(arg) {
+  if (typeof arg === "undefined") { return "" }
+  return arg.selector || arg
 }
 
 function camelify(str) {
