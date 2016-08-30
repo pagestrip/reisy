@@ -1,4 +1,9 @@
 
+1.2.2 / 2016-08-30
+==================
+
+  * support selector references in interpolation
+
 1.2.2 / 2016-08-25
 ==================
 
