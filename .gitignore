@@ -4,4 +4,5 @@ node_modules
 .nyc_output
 /index.js*
 /plugin.js*
+/parser.js*
 npm-debug.log
