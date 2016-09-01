@@ -1,0 +1,11 @@
+.Header-Container {
+  shortcut: Prop;
+  longhand: Prop;
+  wrapped: Prop;
+  quoted-shortcut: "Prop";
+  quoted-longhand: "Prop";
+  quoted-wrapped: "Prop";
+  parenthesized-shortcut: (Prop);
+  parenthesized-longhand: (Prop);
+  parenthesized-wrapped: (Prop);
+}

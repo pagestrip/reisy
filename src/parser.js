@@ -146,15 +146,18 @@ function makeDep(global, str) {
   return dep
 }
 
-const RE_INTERP = /\$\(?(\w+(?:\.\w+)?)([^\w])?/g
+const RE_INTERP = /\$(\()?(\w+(?:\.\w+)?)([^\w])?/g
 function processInterpolation(global, str) {
   const frags = []
   let match
   let lastIndex = 0
   while ((match = RE_INTERP.exec(str))) {
     frags.push(str.substring(lastIndex, match.index))
-    frags.push(makeDep(global, match[1]))
-    lastIndex = match.index + match[0].length - (!match[2] || match[2] === ")" ? 0 : 1)
+    frags.push(makeDep(global, match[2]))
+    lastIndex = match.index + match[0].length - 1
+    if (!match[3] || (match[3] === ")" && match[1] === "(")) {
+      lastIndex += 1
+    }
   }
   if (!lastIndex) {
     return str

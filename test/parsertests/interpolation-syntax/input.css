@@ -1,0 +1,17 @@
+@namespace Header;
+
+Prop: Prop;
+
+Container {
+  shortcut: $Prop;
+  longhand: $Header.Prop;
+  wrapped: $(Header.Prop);
+
+  quoted-shortcut: "$Prop";
+  quoted-longhand: "$Header.Prop";
+  quoted-wrapped: "$(Header.Prop)";
+
+  parenthesized-shortcut: ($Prop);
+  parenthesized-longhand: ($Header.Prop);
+  parenthesized-wrapped: ($(Header.Prop));
+}
