@@ -1,4 +1,9 @@
 
+1.3.1 / 2016-09-01
+==================
+
+  * fix closing parens being swollowed after interpolation
+
 1.3.0 / 2016-08-31
 ==================
 
