@@ -22,6 +22,12 @@ your style definitions inline with your JS, using a CSS-like language. The
 following examples will use this CSS-like syntax to walk you through all of
 reisys features.
 
+## testimonials
+
+> *reisy* works really nicely now. I don’t want to kill myself any more.
+>
+> – Kai
+
 
 ## basic styling
 
