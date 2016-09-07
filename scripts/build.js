@@ -12,6 +12,7 @@ const plugins = () => [
     ],
     plugins: [
       "external-helpers",
+      "transform-flow-strip-types",
     ],
   }),
 ]

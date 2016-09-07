@@ -36,7 +36,7 @@ function createTest(dir) {
   })
 
   if (meta.plugin !== false) {
-    it(`${name} (plugin)`, () => {
+    it.skip(`${name} (plugin)`, () => {
       runWith({plugin: true})
     })
   }
