@@ -16,7 +16,7 @@ function parsePlugin(str) {
   const {code} = transform(`function a() {}a\`\`; const output = reisy\`${str}\`;`, opts)
   // eslint-disable-next-line no-new-func
   ;(new Function("reisy", `${code} return output`))(reisy)
-  const nodes = reisy._nodes
+  const nodes = reisy._processor.nodes
   reisy.reset()
   return nodes
 }

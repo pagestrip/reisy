@@ -4,16 +4,19 @@ import prefix from "inline-style-prefixer/static"
 import toposort from "./toposort.js"
 
 class Processor {
-  constructor({_nodes, _overrides, _namespaces, _pretty}) {
-    this.nodes = _nodes
-    this.overrides = _overrides
-    this.namespaces = _namespaces
-    this.pretty = _pretty
-    this.rules = []
-    this.registry = Object.create(null)
+  constructor() {
+    this.nodes = []
+    this.overrides = []
+    this.namespaces = Object.create(null)
+    this.pretty = process.env.NODE_ENV !== "production"
+    this.rules = null
+    this.registry = null
   }
 
   resolve() {
+    this.rules = []
+    this.registry = Object.create(null)
+
     // 1. apply overrides
     let nodes = Object.create(null)
     registerNodes(nodes, this.nodes, false)
@@ -25,7 +28,7 @@ class Processor {
     // 3. resolve the nodes, collecting them to individual rules
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i]
-      processNode(this, node)
+      this.processNode(node)
     }
 
     const {rules} = this
@@ -41,27 +44,149 @@ class Processor {
 
     return css
   }
-}
 
-function ClassName({pretty}, node) {
-  const {ns, name} = node
-  if (!ns) {
-    return name
+  ClassName(node) {
+    const {ns, name} = node
+    if (!ns) {
+      return name
+    }
+    const className = `${ns}-${name}`
+    if (this.pretty) {
+      return className
+    }
+
+    // create a tiny hash of the className, just to save some bytes :-)
+    let value = 5381
+    let i = className.length
+
+    while (i) {
+      value = (value * 33) ^ className.charCodeAt(--i)
+    }
+
+    return `_${(value >>> 0).toString(36)}`
   }
-  const className = `${ns}-${name}`
-  if (pretty) {
-    return className
+
+  interpolate(parts) {
+    if (typeof parts !== "object") {
+      return parts
+    }
+    if (parts.length === 2 && !parts[0]) {
+      return interpolatedValue(this.registry[parts[1]])
+    }
+    return parts.map((part, i) => i % 2 === 0
+      ? String(part)
+      : interpolatedValue(this.registry[part])
+    ).join("").trim()
   }
 
-  // create a tiny hash of the className, just to save some bytes :-)
-  let value = 5381
-  let i = className.length
+  processNode(node) {
+    const {key, ns, name, def} = node
+    const {type} = def
+    const {registry, namespaces} = this
+    let value
 
-  while (i) {
-    value = (value * 33) ^ className.charCodeAt(--i)
+    if (type === "rule") {
+      const className = this.ClassName(node)
+      value = {
+        selector: `${node.ns ? "." : ""}${className}`,
+        className,
+      }
+      const seen = Object.create(null)
+
+      const {defs} = def
+      for (let i = 0; i < defs.length; i++) {
+        const def = defs[i]
+        this.processParents(seen, value, def.parents, key)
+        const rule = createRule(value.selector)
+        this.processRule(rule, def.defs)
+      }
+    } else if (type === "font") {
+      value = this.ClassName(node)
+      // attach the font name using a temporary property here…
+      def.defs.forEach(def => {
+        def.unshift(["fontFamily", decl(value)])
+        this.processRule(createRule("@font-face"), def)
+        def.shift()
+      })
+    } else if (type === "keyframes") {
+      value = this.ClassName(node)
+      this.processNestedRule(`@keyframes ${value}`, def.defs)
+      // and then there is old webkits :-(
+      this.processNestedRule(`@-webkit-keyframes ${value}`, def.defs)
+    } else {
+      value = this.interpolate(def.value)
+    }
+    registry[key] = value
+    if (ns) {
+      if (!namespaces[ns]) {
+        namespaces[ns] = Object.create(null)
+      }
+      namespaces[ns][name] = (value && typeof value === "object")
+        ? value.className
+        : value
+    }
+    return value
   }
 
-  return `_${(value >>> 0).toString(36)}`
+  processParents(seen, value, parents, nodekey) {
+    for (let i = 0; i < parents.length; i++) {
+      const key = parents[i]
+      if (seen[key]) { continue }
+      seen[key] = true
+      const parent = this.registry[key]
+      if (parent) {
+        value.className = `${parent.className} ${value.className}`
+      } else {
+        console.error(new Error(`reisy: "${nodekey}" extends non-existant "${key}". A typo maybe?`))
+      }
+      seen[key] = true
+    }
+  }
+
+  processNestedRule(name, defs, _rule) {
+    const rule = createRule(name)
+    const container = _rule || createRule("")
+    const rules = this.rules
+    this.rules = []
+    this.processRule(container, defs)
+    for (let i = _rule ? 0 : 1; i < this.rules.length; i++) {
+      const r = this.rules[i]
+      rule.def[r.selector] = r.def
+    }
+    this.rules = rules
+    this.rules.push(rule)
+    return rule
+  }
+
+  processRule(rule, defs) {
+    this.rules.push(rule)
+    for (let i = 0; i < defs.length; i++) {
+      const _def = defs[i]
+      const name = this.interpolate(_def[0])
+      const def = _def[1]
+      const {type} = def
+      if (type === "rule") {
+        const {defs} = def
+        if (name.startsWith("@")) {
+          this.processNestedRule(name, defs, createRule(rule.selector))
+          continue
+        }
+        const selector = rule.selector.split(",").reduce((arr, _selector) => {
+          const selector = _selector.trim()
+          return arr.concat(name.split(",").map(_name => {
+            const name = _name.includes("&") ? _name.trim() : `& ${_name.trim()}`
+            return name.replace("&", selector).trim()
+          }))
+        }, []).join(", ")
+        this.processRule(createRule(selector), defs)
+      } else {
+        const value = type === "multidecl"
+          ? def.values.map(value => this.interpolate(value))
+          : this.interpolate(def)
+        rule.def[camelify(name)] = value
+      }
+    }
+  }
 }
 
 let ANONYMOUS = 0
@@ -115,133 +240,11 @@ function processTypeDef(_def, olddef, key) {
 
 export default Processor
 
-function processNode(output, node) {
-  const {key, ns, name, def} = node
-  const {type} = def
-  const {registry, namespaces} = output
-  let value
-
-  if (type === "rule") {
-    const className = ClassName(output, node)
-    value = {
-      selector: `${node.ns ? "." : ""}${className}`,
-      className,
-    }
-    const seen = Object.create(null)
-
-    const {defs} = def
-    for (let i = 0; i < defs.length; i++) {
-      const def = defs[i]
-      processParents(output, seen, value, def.parents, key)
-      const rule = createRule(value.selector)
-      processRule(output, rule, def.defs)
-    }
-  } else if (type === "font") {
-    value = ClassName(output, node)
-    // attach the font name using a temporary property here…
-    def.defs.forEach(def => {
-      def.unshift(["fontFamily", decl(value)])
-      processRule(output, createRule("@font-face"), def)
-      def.shift()
-    })
-  } else if (type === "keyframes") {
-    value = ClassName(output, node)
-    processNestedRule(output, `@keyframes ${value}`, def.defs)
-    // and then there is old webkits :-(
-    processNestedRule(output, `@-webkit-keyframes ${value}`, def.defs)
-  } else {
-    value = interpolate(registry, def.value)
-  }
-  registry[key] = value
-  if (ns) {
-    if (!namespaces[ns]) {
-      namespaces[ns] = Object.create(null)
-    }
-    namespaces[ns][name] = (value && typeof value === "object")
-      ? value.className
-      : value
-  }
-  return value
-}
-
-function processParents(output, seen, value, parents, nodekey) {
-  for (let i = 0; i < parents.length; i++) {
-    const key = parents[i]
-    if (seen[key]) { continue }
-    seen[key] = true
-    const parent = output.registry[key]
-    if (parent) {
-      value.className = `${parent.className} ${value.className}`
-    } else {
-      console.error(new Error(`reisy: "${nodekey}" extends non-existant "${key}". A typo maybe?`))
-    }
-    seen[key] = true
-  }
-}
-
 function createRule(selector) {
   return {
     selector,
     def: Object.create(null),
   }
-}
-
-function processNestedRule(output, name, defs, _rule) {
-  const rule = createRule(name)
-  const container = _rule || createRule("")
-  const rules = output.rules
-  output.rules = []
-  processRule(output, container, defs)
-  for (let i = _rule ? 0 : 1; i < output.rules.length; i++) {
-    const r = output.rules[i]
-    rule.def[r.selector] = r.def
-  }
-  output.rules = rules
-  output.rules.push(rule)
-  return rule
-}
-
-function processRule(output, rule, defs) {
-  output.rules.push(rule)
-  for (let i = 0; i < defs.length; i++) {
-    const _def = defs[i]
-    const name = interpolate(output.registry, _def[0])
-    const def = _def[1]
-    const {type} = def
-    if (type === "rule") {
-      const {defs} = def
-      if (name.startsWith("@")) {
-        processNestedRule(output, name, defs, createRule(rule.selector))
-        continue
-      }
-      const selector = rule.selector.split(",").reduce((arr, _selector) => {
-        const selector = _selector.trim()
-        return arr.concat(name.split(",").map(_name => {
-          const name = _name.includes("&") ? _name.trim() : `& ${_name.trim()}`
-          return name.replace("&", selector).trim()
-        }))
-      }, []).join(", ")
-      processRule(output, createRule(selector), defs)
-    } else {
-      const value = type === "multidecl"
-        ? def.values.map(value => interpolate(output.registry, value))
-        : interpolate(output.registry, def)
-      rule.def[camelify(name)] = value
-    }
-  }
-}
-
-function interpolate(registry, parts) {
-  if (typeof parts !== "object") {
-    return parts
-  }
-  if (parts.length === 2 && !parts[0]) {
-    return interpolatedValue(registry[parts[1]])
-  }
-  return parts.map((part, i) => i % 2 === 0
-    ? String(part)
-    : interpolatedValue(registry[part])
-  ).join("").trim()
 }
 
 function interpolatedValue(arg) {

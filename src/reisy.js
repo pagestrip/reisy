@@ -7,16 +7,13 @@ class Reisy {
   }
 
   reset() {
-    this._nodes = []
-    this._overrides = []
-    this._namespaces = Object.create(null)
+    this._processor = new Processor()
     this._listeners = new Set()
-    this._pretty = process.env.NODE_ENV !== "production"
     return this
   }
 
   pretty(pretty) {
-    this._pretty = pretty
+    this._processor.pretty = pretty
   }
 
   notify() {
@@ -32,33 +29,32 @@ class Reisy {
   }
 
   node(...args) {
-    this._nodes.push(node(...args))
+    this._processor.nodes.push(node(...args))
     this.notify()
     return this
   }
 
   nodes(nodes) {
-    this._nodes = this._nodes.concat(nodes)
+    this._processor.nodes = this._processor.nodes.concat(nodes)
     this.notify()
     return this
   }
 
   namespace(name) {
     if (!name) { return null }
-    const ns = this._namespaces[name] || Object.create(null)
-    this._namespaces[name] = ns
+    const ns = this._processor.namespaces[name] || Object.create(null)
+    this._processor.namespaces[name] = ns
     return ns
   }
 
   overrides(overrides) {
-    this._overrides = overrides
+    this._processor.overrides = overrides
     this.notify()
     return this
   }
 
   resolve() {
-    const processor = new Processor(this)
-    return processor.resolve()
+    return this._processor.resolve()
   }
 }
 
