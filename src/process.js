@@ -88,6 +88,7 @@ class Processor {
     if (type === "rule") {
       const className = this.ClassName(node)
       value = {
+        type: "rule",
         selector: `${node.ns ? "." : ""}${className}`,
         className,
       }
@@ -102,28 +103,31 @@ class Processor {
       }
     } else if (type === "font") {
       value = this.ClassName(node)
+      const family = ["fontFamily", decl(value)]
       // attach the font name using a temporary property here…
       def.defs.forEach(def => {
-        def.unshift(["fontFamily", decl(value)])
+        def.unshift(family)
         this.processRule(createRule("@font-face"), def)
         def.shift()
       })
+      value = Value(value)
     } else if (type === "keyframes") {
       value = this.ClassName(node)
       this.processNestedRule(`@keyframes ${value}`, def.defs)
       // and then there is old webkits :-(
       this.processNestedRule(`@-webkit-keyframes ${value}`, def.defs)
+      value = Value(value)
     } else {
-      value = this.interpolate(def.value)
+      value = Value(this.interpolate(def.value))
     }
     registry[key] = value
     if (ns) {
       if (!namespaces[ns]) {
         namespaces[ns] = Object.create(null)
       }
-      namespaces[ns][name] = (value && typeof value === "object")
+      namespaces[ns][name] = value.type === "rule"
         ? value.className
-        : value
+        : value.value
     }
     return value
   }
@@ -247,9 +251,18 @@ function createRule(selector) {
   }
 }
 
+function Value(value) {
+  return {
+    type: "value",
+    value,
+  }
+}
+
 function interpolatedValue(arg) {
   if (typeof arg === "undefined") { return "" }
-  return arg.selector || arg
+  return arg.type === "rule"
+    ? arg.selector
+    : arg.value
 }
 
 function camelify(str) {
