@@ -31,25 +31,20 @@ function createTest(dir) {
     return
   }
 
-  it(`${name} (parser)`, () => {
-    runWith({plugin: false})
-  })
-
-  if (meta.plugin !== false) {
-    it(`${name} (plugin)`, () => {
-      runWith({plugin: true})
-    })
-  }
-
-  function runWith({plugin}) {
-    const nodes = plugin
-      ? parsePlugin(read("input.css"))
-      : parse(read("input.css")).nodes
+  const plugin = meta.plugin !== false
+  it(name, () => {
+    const input = read("input.css")
+    const {nodes} = parse(input)
+    if (plugin) {
+      expect(parsePlugin(input)).to.eql(nodes)
+    }
     let overrides = []
     try {
-      overrides = plugin
-        ? parsePlugin(read("overrides.css"))
-        : parse(read("overrides.css")).nodes
+      const input = read("overrides.css")
+      overrides = parse(input).nodes
+      if (plugin) {
+        expect(parsePlugin(input)).to.eql(overrides)
+      }
     } catch (e) {}
     let expected = ""
     try {
@@ -87,7 +82,7 @@ function createTest(dir) {
       })
     }
     console.error = error
-  }
+  })
 }
 
 describe("Parser/Plugin", () => {
