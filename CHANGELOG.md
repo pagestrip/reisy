@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+## 1.4.0 (2016-09-29)
+
+
+#### Features
+
+* **syntax:**  generate reisy css from json definiton ([f2c047aa](f2c047aa))
+
+
+
 
 1.3.1 / 2016-09-01
 ==================
