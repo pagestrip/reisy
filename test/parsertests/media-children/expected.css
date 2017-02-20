@@ -1,0 +1,16 @@
+.Foo-Bar {
+  color: black;
+}
+.Bar-Foo {
+  color: black;
+}
+@media screen {
+  body .Foo-Bar, body .Bar-Foo {
+    color: white;
+  }
+}
+@media not screen {
+  body .Foo-Bar, body .Bar-Foo {
+    color: red;
+  }
+}

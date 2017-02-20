@@ -1,0 +1,28 @@
+@namespace Media;
+foo: screen;
+bar: not screen;
+
+@namespace Foo;
+Bar {
+  color: black;
+}
+
+@namespace Bar;
+Foo {
+  color: black;
+}
+
+@namespace;
+
+body {
+  $Foo.Bar, $Bar.Foo {
+    @media $Media.foo {
+      color: white;
+    }
+  }
+  @media $Media.bar {
+    $Foo.Bar, $Bar.Foo {
+      color: red;
+    }
+  }
+}
