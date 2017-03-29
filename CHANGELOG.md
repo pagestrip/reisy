@@ -1,3 +1,13 @@
+<a name="1.5.0"></a>
+## 1.5.0 (2017-03-29)
+
+
+#### Features
+
+* **output:**  Add support to prefix EVERY selector ([3c69f83d](3c69f83d))
+
+
+
 <a name="1.4.0"></a>
 ## 1.4.0 (2016-09-29)
 
