@@ -1,3 +1,13 @@
+<a name="1.5.1"></a>
+### 1.5.1 (2017-03-29)
+
+
+#### Bug Fixes
+
+* **output:**  properly add global prefix to @rules ([b1f22bab](b1f22bab))
+
+
+
 <a name="1.5.0"></a>
 ## 1.5.0 (2017-03-29)
 
