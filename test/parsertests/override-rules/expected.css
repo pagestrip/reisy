@@ -12,5 +12,6 @@
   position: fixed;
 }
 .Header-Container {
+  position: -webkit-sticky;
   position: sticky;
 }

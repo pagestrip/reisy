@@ -3,5 +3,6 @@
   top: 1px;
   position: absolute;
   position: fixed;
+  position: -webkit-sticky;
   position: sticky;
 }

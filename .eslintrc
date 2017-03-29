@@ -1,6 +1,7 @@
 {
   "extends": ["swatinem"],
   "rules": {
+    "semi": ["error", "never"],
   },
   "globals": {
   },

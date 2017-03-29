@@ -68,6 +68,11 @@ function createTest(dir) {
     reisy.nodes(nodes)
     reisy.overrides(overrides)
     reisy.pretty(true)
+
+    if (meta.prefix) {
+      reisy.prefix(meta.prefix)
+    }
+
     const output = reisy.resolve()
 
     // assert that generating reisy-flavored css from the nodes and re-parsing

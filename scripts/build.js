@@ -52,15 +52,12 @@ const configs = [
 
 function runOne(config) {
   const file = config.dest
-  const start = process.hrtime()
   return rollup.rollup(config)
     .then(bundle => bundle.write(config))
     .then(res => {
-      let time = process.hrtime(start)
       const stat = fs.statSync(file)
       const size = Math.ceil(stat.size / 1024)
-      time = Math.ceil(((time[0] * 1e9) + time[1]) / 1e6)
-      console.log(`-> ${rightpad(file, 15)}  ${leftpad(time, 5)}ms    ${leftpad(size, 4)}kiB`)
+      console.log(`-> ${rightpad(file, 15)}    ${leftpad(size, 4)}kiB`)
       return res
     })
 }

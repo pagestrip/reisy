@@ -9,6 +9,7 @@ class Processor {
     this.overrides = []
     this.namespaces = Object.create(null)
     this.pretty = process.env.NODE_ENV !== "production"
+    this.prefix = ""
     this.rules = null
     this.registry = null
   }
@@ -37,6 +38,12 @@ class Processor {
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       prefix(rule.def)
+
+      // apply a prefix to every selector
+      if (rule.selector && this.prefix) {
+        rule.selector = rule.selector.split(",").map(selector =>
+          `${this.prefix} ${selector.trim()}`.trim()).join(", ")
+      }
     }
 
     // 4. serialize the rules to css

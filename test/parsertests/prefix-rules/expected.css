@@ -1,0 +1,12 @@
+.PREFIX .foo, .PREFIX .bar {
+  display: block;
+}
+.PREFIX .foo.baz, .PREFIX .bar.baz {
+  color: #fff;
+}
+.PREFIX .Foo-Bar .foo, .PREFIX .Foo-Bar .bar {
+  display: block;
+}
+.PREFIX .Foo-Bar .foo.baz, .PREFIX .Foo-Bar .bar.baz {
+  color: #fff;
+}

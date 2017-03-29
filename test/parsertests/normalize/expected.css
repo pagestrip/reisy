@@ -84,7 +84,6 @@ hr {
   box-sizing: content-box;
   height: 0;
   overflow: visible;
-  -moz-box-sizing: content-box;
 }
 button, input, optgroup, select, textarea {
   font: inherit;
@@ -121,7 +120,6 @@ legend {
   max-width: 100%;
   padding: 0;
   white-space: normal;
-  -moz-box-sizing: border-box;
 }
 textarea {
   overflow: auto;
@@ -129,7 +127,6 @@ textarea {
 [type="checkbox"], [type="radio"] {
   box-sizing: border-box;
   padding: 0;
-  -moz-box-sizing: border-box;
 }
 [type="number"]::-webkit-inner-spin-button, [type="number"]::-webkit-outer-spin-button {
   height: auto;

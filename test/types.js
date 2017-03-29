@@ -58,13 +58,13 @@ describe("Typed API", () => {
     expect(css).to.equal(
 `@font-face {
   font-family: Fonts-Default;
-  src: url(normal.woff) format(\'woff\');
+  src: url(normal.woff) format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: Fonts-Default;
-  src: url(bold.woff) format(\'woff\');
+  src: url(bold.woff) format('woff');
   font-weight: bold;
   font-style: normal;
 }
@@ -141,6 +141,7 @@ describe("Typed API", () => {
     expect(css).to.eql(
 `.Header-Container {
   position: fixed;
+  position: -webkit-sticky;
   position: sticky;
 }`)
   })
@@ -239,12 +240,10 @@ describe("Typed API", () => {
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  -webkit-flex-shrink: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-negative: 0;
+  -webkit-flex-direction: row;
+  -webkit-flex-shrink: 0;
 }`)
   })
 })

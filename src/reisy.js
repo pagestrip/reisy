@@ -16,6 +16,10 @@ class Reisy {
     this._processor.pretty = pretty
   }
 
+  prefix(prefix) {
+    this._processor.prefix = prefix
+  }
+
   notify() {
     this._listeners.forEach(listener => listener(this))
   }
