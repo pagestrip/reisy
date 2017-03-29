@@ -38,12 +38,6 @@ class Processor {
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       prefix(rule.def)
-
-      // apply a prefix to every selector
-      if (rule.selector && this.prefix) {
-        rule.selector = rule.selector.split(",").map(selector =>
-          `${this.prefix} ${selector.trim()}`.trim()).join(", ")
-      }
     }
 
     // 4. serialize the rules to css
@@ -86,6 +80,12 @@ class Processor {
     ).join("").trim()
   }
 
+  prefixSelector(selector) {
+    if (!this.prefix) { return selector }
+    return selector.split(",").map(selector =>
+      `${this.prefix} ${selector.trim()}`.trim()).join(", ")
+  }
+
   processNode(node) {
     const {key, ns, name, def} = node
     const {type} = def
@@ -96,7 +96,7 @@ class Processor {
       const className = this.ClassName(node)
       value = {
         type: "rule",
-        selector: `${node.ns ? "." : ""}${className}`,
+        selector: this.prefixSelector(`${node.ns ? "." : ""}${className}`),
         className,
       }
       const seen = Object.create(null)

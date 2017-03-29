@@ -4,6 +4,14 @@
 .PREFIX .foo.baz, .PREFIX .bar.baz {
   color: #fff;
 }
+.PREFIX .Foo-Bar {
+  color: red;
+}
+@media screen {
+  .PREFIX .Foo-Bar {
+    color: blue;
+  }
+}
 .PREFIX .Foo-Bar .foo, .PREFIX .Foo-Bar .bar {
   display: block;
 }

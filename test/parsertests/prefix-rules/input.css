@@ -11,6 +11,10 @@
 @namespace Foo;
 
 Bar {
+  color: red;
+  @media screen {
+    color: blue;
+  }
   .foo, .bar {
     display: block;
 
