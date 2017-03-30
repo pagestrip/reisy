@@ -23,3 +23,15 @@ Bar {
     }
   }
 }
+
+A {
+}
+B {
+}
+C {
+  $(A):last-child $(B):last-child & {
+    @media screen {
+      color: black;
+    }
+  }
+}

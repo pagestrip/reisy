@@ -41,9 +41,15 @@ class Processor {
     }
 
     // 4. serialize the rules to css
-    const css = stringify(rules, this.pretty)
+    const css = stringify(rules, this.prefixSelector.bind(this), this.pretty)
 
     return css
+  }
+
+  prefixSelector(selector) {
+    if (!this.prefix || selector.startsWith("@")) { return selector }
+    return selector.split(",").map(selector =>
+      `${this.prefix} ${selector.trim()}`.trim()).join(", ")
   }
 
   ClassName(node) {
@@ -80,12 +86,6 @@ class Processor {
     ).join("").trim()
   }
 
-  prefixSelector(selector) {
-    if (!this.prefix) { return selector }
-    return selector.split(",").map(selector =>
-      `${this.prefix} ${selector.trim()}`.trim()).join(", ")
-  }
-
   processNode(node) {
     const {key, ns, name, def} = node
     const {type} = def
@@ -96,7 +96,7 @@ class Processor {
       const className = this.ClassName(node)
       value = {
         type: "rule",
-        selector: this.prefixSelector(`${node.ns ? "." : ""}${className}`),
+        selector: `${node.ns ? "." : ""}${className}`,
         className,
       }
       const seen = Object.create(null)

@@ -18,3 +18,8 @@
 .PREFIX .Foo-Bar .foo.baz, .PREFIX .Foo-Bar .bar.baz {
   color: #fff;
 }
+@media screen {
+  .PREFIX .Foo-A:last-child .Foo-B:last-child .Foo-C {
+    color: black;
+  }
+}
