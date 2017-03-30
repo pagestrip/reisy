@@ -243,6 +243,8 @@ describe("Typed API", () => {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  -ms-flex-negative: 0;
   -webkit-flex-shrink: 0;
 }`)
   })

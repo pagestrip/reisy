@@ -1,6 +1,6 @@
 import stringify from "./stringify.js"
 import {decl} from "./types.js"
-import prefix from "inline-style-prefixer/static"
+import prefix from "./prefix.js"
 import toposort from "./toposort.js"
 
 class Processor {

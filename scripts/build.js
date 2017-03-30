@@ -45,7 +45,7 @@ const configs = [
     external: ["postcss"],
   }),
   mkConfig("src/index.js", "index.js", {
-    external: ["inline-style-prefixer/static"],
+    external: path => path.includes("inline-style-prefixer/static"),
     exports: "named",
   }),
 ]
