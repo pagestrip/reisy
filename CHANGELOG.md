@@ -1,3 +1,13 @@
+<a name="1.5.3"></a>
+### 1.5.3 (2017-03-30)
+
+
+#### Bug Fixes
+
+* **output:**  fix selector prefixing, for real this time ([318feb50](318feb50))
+
+
+
 <a name="1.5.2"></a>
 ### 1.5.2 (2017-03-30)
 
