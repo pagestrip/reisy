@@ -1,3 +1,13 @@
+<a name="1.5.2"></a>
+### 1.5.2 (2017-03-30)
+
+
+#### Bug Fixes
+
+* **output:**  make sure to also prefix css for ie10 :-( ([2f5945f3](2f5945f3))
+
+
+
 <a name="1.5.1"></a>
 ### 1.5.1 (2017-03-29)
 
