@@ -47,7 +47,7 @@ class Processor {
   }
 
   prefixSelector(selector) {
-    if (!this.prefix || selector.startsWith("@")) { return selector }
+    if (!this.prefix || selector.match(/^(\d|@).*/)) { return selector }
     return selector.split(",").map(selector =>
       `${this.prefix} ${selector.trim()}`.trim()).join(", ")
   }
