@@ -1,3 +1,13 @@
+<a name="1.5.4"></a>
+### 1.5.4 (2017-04-06)
+
+
+#### Bug Fixes
+
+* **output:**  global prefix would prefix keyframes -> added a check if selector name starts with a digit ([2a797d9b](2a797d9b))
+
+
+
 <a name="1.5.3"></a>
 ### 1.5.3 (2017-03-30)
 
