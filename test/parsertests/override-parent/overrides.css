@@ -1,6 +1,8 @@
 @namespace Header;
 
 Container {
+  @extends Helpers.AbsFull;
+  @extends Helpers.Bordered;
   @remove Helpers.Bordered;
   font-size: 2em;
 }

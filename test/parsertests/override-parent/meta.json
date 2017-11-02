@@ -1,5 +1,5 @@
 {
-  "name": "don’t add a parent twice when overriding",
+  "name": "don’t add a parent twice when overriding and remove it",
   "namespaces": {
     "Header": {
       "Container": "Helpers-AbsFull Header-Container"
