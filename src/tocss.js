@@ -23,6 +23,8 @@ function stringifyDef(lines, name, def, indent = "") {
   } else if (def.type === "font") {
     const _name = `@font-face ${name}`
     def.defs.forEach(defs => stringifyDef(lines, _name, {defs}, indent))
+  } else if (def.type === "json") {
+    lines.push(`${indent}${name}: json(${JSON.stringify(def.value)});`)
   } else {
     const {type, defs} = def
     const _name = type === "keyframes"

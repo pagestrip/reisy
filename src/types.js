@@ -5,6 +5,13 @@ export function decl(...value) {
   return value
 }
 
+export function json(value) {
+  return {
+    type: "json",
+    value,
+  }
+}
+
 export function multidecl(...values) {
   return {
     type: "multidecl",

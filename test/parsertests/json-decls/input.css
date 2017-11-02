@@ -1,0 +1,9 @@
+@namespace Json;
+
+colors: json({
+  "red": "#f00"
+});
+
+Apple {
+  color: $Json.colors.red;
+}

@@ -124,6 +124,8 @@ class Processor {
       // and then there is old webkits :-(
       this.processNestedRule(`@-webkit-keyframes ${value}`, def.defs)
       value = Value(value)
+    } else if (type === "json") {
+      value = Value(`json(${JSON.stringify(def.value)})`);
     } else {
       value = Value(this.interpolate(def.value))
     }

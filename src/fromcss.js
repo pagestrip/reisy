@@ -1,4 +1,4 @@
-import {decl, multidecl, rule, keyframes, font, node} from "./types.js"
+import {decl, multidecl, rule, keyframes, font, node, json} from "./types.js"
 import postcss from "postcss"
 
 export default function parse(source) {
@@ -34,6 +34,13 @@ function convertRoot(root) {
     let value = convertNode(global, n)
     if (type === "decl") {
       name = n.prop
+      if (value.type === 'json') {
+        for (var k in value.value) {
+          if (!nodes.find(n => n.name === name + '.' + k)) {
+            nodes.push(node(ns, name + '.' + k, [...global.deps], value.value[k]));
+          }
+        }
+      }
     } else if (type === "rule") {
       name = n.selectors.join(", ")
 
@@ -87,11 +94,15 @@ function nodeName(n) {
   return n.selectors.join(", ")
 }
 
+const RE_JSON = /^json\(([\s\S]+)\)$/;
 function convertNode(global, node) {
   const {type} = node
   if (type === "decl") {
     let value = processInterpolation(global, `${node.value}${node.important ? " !important" : ""}`)
-    if (value === "true") {
+    const jsonMatch = String(value).match(RE_JSON);
+    if (jsonMatch) {
+      return json(JSON.parse(jsonMatch[1]));
+    } else if (value === "true") {
       value = true
     } else if (value === "false") {
       value = false
@@ -146,7 +157,7 @@ function makeDep(global, str) {
   return dep
 }
 
-const RE_INTERP = /\$(\()?(\w+(?:\.\w+)?)([^\w])?/g
+const RE_INTERP = /\$(\()?(\w+(?:\.\w+)*)([^\w])?/g
 function processInterpolation(global, str) {
   const frags = []
   let match

@@ -1,0 +1,10 @@
+{
+  "name": "declarations with boolean or number type",
+  "namespaces": {
+    "Json": {
+      "Apple": "Json-Apple",
+      "colors": "json({\"red\":\"#f00\"})",
+      "colors.red": "#f00"
+    }
+  }
+}
