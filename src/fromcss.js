@@ -119,6 +119,13 @@ function convertNode(global, node) {
         parents.push(makeDep(global, name))
       }
       continue
+    } else if (n.type === "atrule" && n.name === "remove") {
+      const params = n.params.split(",")
+      for (let i = 0; i < params.length; i++) {
+        const name = '-' + params[i].trim()
+        parents.push(makeDep(global, name))
+      }
+      continue
     }
     const name = processInterpolation(global, nodeName(n))
     const value = convertNode(global, n)
@@ -142,7 +149,7 @@ function makeDep(global, str) {
   const dep = str.includes(".")
     ? str
     : `${global.ns}.${str}`
-  global.deps.add(dep)
+  if(!str.startsWith("-")) { global.deps.add(dep) }
   return dep
 }
 

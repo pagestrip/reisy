@@ -5,6 +5,9 @@
   bottom: 0;
   left: 0;
 }
+.Helpers-Bordered {
+  border: 1px solid #f00;
+}
 .Header-Container {
   position: fixed;
 }

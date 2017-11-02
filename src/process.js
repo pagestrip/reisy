@@ -141,12 +141,18 @@ class Processor {
 
   processParents(seen, value, parents, nodekey) {
     for (let i = 0; i < parents.length; i++) {
-      const key = parents[i]
+      let key = parents[i]
       if (seen[key]) { continue }
+      const remove = key.startsWith('-');
+      key = key.substr(remove ? 1 : 0);
       seen[key] = true
       const parent = this.registry[key]
       if (parent) {
-        value.className = `${parent.className} ${value.className}`
+        if (remove) {
+          value.className = value.className.replace(parent.className, '').trim();
+        } else {
+          value.className = `${parent.className} ${value.className}`
+        }
       } else {
         console.error(new Error(`reisy: "${nodekey}" extends non-existant "${key}". A typo maybe?`))
       }
