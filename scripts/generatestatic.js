@@ -1,4 +1,5 @@
-const generateData = require('inline-style-prefixer/generator');
+/* eslint-disable */
+const generateData = require("inline-style-prefixer/generator");
 
 const browserList = {
   chrome: 42,
@@ -12,9 +13,9 @@ const browserList = {
   opera: 16,
   op_mini: 12,
   and_uc: 9,
-  and_chr: 46
+  and_chr: 46,
 }
 
 generateData(browserList, {
-  staticPath: `${__dirname}/staticData.js`
+  staticPath: `${__dirname}/staticData.js`,
 })
