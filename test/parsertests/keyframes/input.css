@@ -2,9 +2,11 @@
 @keyframes Foo {
   0% {
     width: 0px;
+    transform: translate(100px);
   }
   100% {
     width: 100px;
+    transform: translate(0px);
   }
 }
 

@@ -15,7 +15,6 @@
   -webkit-box-direction: normal;
   -ms-flex-negative: 0;
 }
-
 @media (max-width: 300px) {
   .Header-Container {
     -webkit-transform: translateX(10px);

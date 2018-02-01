@@ -7,7 +7,7 @@ class Processor {
   constructor() {
     this.nodes = []
     this.overrides = []
-    this.namespaces = Object.create(null)
+    this.namespaces = {}
     this.pretty = process.env.NODE_ENV !== "production"
     this.prefix = ""
     this.rules = null
@@ -16,10 +16,10 @@ class Processor {
 
   resolve() {
     this.rules = []
-    this.registry = Object.create(null)
+    this.registry = {}
 
     // 1. apply overrides
-    let nodes = Object.create(null)
+    let nodes = {}
     registerNodes(nodes, this.nodes, false)
     registerNodes(nodes, this.overrides)
 
@@ -99,7 +99,7 @@ class Processor {
         selector: `${node.ns ? "." : ""}${className}`,
         className,
       }
-      const seen = Object.create(null)
+      const seen = {}
 
       const {defs} = def
       for (let i = 0; i < defs.length; i++) {
@@ -130,7 +130,7 @@ class Processor {
     registry[key] = value
     if (ns) {
       if (!namespaces[ns]) {
-        namespaces[ns] = Object.create(null)
+        namespaces[ns] = {}
       }
       namespaces[ns][name] = value.type === "rule"
         ? value.className
@@ -254,7 +254,7 @@ export default Processor
 function createRule(selector) {
   return {
     selector,
-    def: Object.create(null),
+    def: {},
   }
 }
 

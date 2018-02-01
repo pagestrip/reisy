@@ -1,5 +1,4 @@
 html {
-  @meta select(foo, options(foo, bar, taboo));
   margin: 0;
   padding: 0;
 }
