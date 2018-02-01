@@ -22,6 +22,7 @@
   ],
   "scripts": {
     "build": "node scripts/build",
+    "static": "node scripts/generatestatic",
     "clean": "rm -rf parser.js* index.js* plugin.js* bin",
     "test": "NODE_ENV=test nyc mocha",
     "lint": "eslint src test scripts",
@@ -59,8 +60,9 @@
     "rollup-plugin-babel": "^2.7.1"
   },
   "dependencies": {
-    "inline-style-prefixer": "^3.0.2",
-    "postcss": "^5.2.16",
-    "source-map-support": "^0.4.14"
+    "caniuse-api": "^2.0.0",
+    "inline-style-prefixer": "^4.0.0",
+    "postcss": "^6.0.16",
+    "source-map-support": "^0.5.3"
   }
 }
