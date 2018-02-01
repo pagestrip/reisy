@@ -15,6 +15,6 @@
   }
 }
 .Header-Container {
-  animation: Anim-Foo 1s infinite linear;
   -webkit-animation: Anim-Foo 1s infinite linear;
+  animation: Anim-Foo 1s infinite linear;
 }

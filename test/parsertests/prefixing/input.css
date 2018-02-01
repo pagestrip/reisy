@@ -3,4 +3,9 @@ Container {
   display: flex;
   flex-direction: row;
   flex-shrink: 0;
+  transform: translateX(20px);
+
+  @media (max-width: 300px) {
+  	transform: translateX(10px);
+  }
 }

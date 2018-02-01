@@ -35,8 +35,8 @@ describe("Typed API", () => {
   }
 }
 .Header-Container {
-  animation: Anim-Foo 1s infinite linear;
   -webkit-animation: Anim-Foo 1s infinite linear;
+  animation: Anim-Foo 1s infinite linear;
 }`)
   })
 
@@ -238,14 +238,14 @@ describe("Typed API", () => {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
+  -webkit-flex-shrink: 0;
   flex-shrink: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
   -ms-flex-negative: 0;
-  -webkit-flex-shrink: 0;
 }`)
   })
 })

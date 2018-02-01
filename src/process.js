@@ -37,7 +37,7 @@ class Processor {
     // 3.5: prefix all the rules
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
-      prefix(rule.def)
+      rule.def = prefix(rule.def)
     }
 
     // 4. serialize the rules to css
