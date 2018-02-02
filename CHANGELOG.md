@@ -1,3 +1,13 @@
+<a name="1.5.5"></a>
+### 1.5.5 (2018-02-01)
+
+
+#### Bug Fixes
+
+* updated dependencies
+* **output:**  fixed that properties within media queries wouldn't be prefixed
+
+
 <a name="1.5.4"></a>
 ### 1.5.4 (2017-04-06)
 
