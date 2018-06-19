@@ -8,7 +8,7 @@ const plugins = () => [
   babel({
     babelrc: false,
     presets: [
-      ["latest", {es2015: {modules: false}}],
+      ["env", {modules: false}],
     ],
     plugins: [
       "external-helpers",
@@ -16,12 +16,14 @@ const plugins = () => [
   }),
 ]
 
-function mkConfig(entry, dest, options) {
+function mkConfig(input, output, options) {
   const config = Object.assign({
-    entry, dest,
-    sourceMap: true,
+    input, 
+    output: Object.assign({
+      sourcemap: true,
+      format: "cjs",
+    }, output),
     plugins: plugins(),
-    format: "cjs",
   }, options)
   return config
 }
@@ -34,26 +36,34 @@ require('source-map-support').install();
 const configs = [
   // XXX: use this via require in cli and plugin once rollup supports code
   // splitting!
-  mkConfig("src/parser.js", "parser.js", {
+  mkConfig("src/parser.js", {
+    file: "parser.js"
+  }, {
     external: ["postcss"],
   }),
-  mkConfig("src/cli.js", "bin/reisy.js", {
-    external: ["fs", "path", "postcss"],
+  mkConfig("src/cli.js", {
+    file: "bin/reisy.js",
     banner,
+  }, {
+    external: ["fs", "path", "postcss"],
   }),
-  mkConfig("src/plugin.js", "plugin.js", {
+  mkConfig("src/plugin.js", {
+    file: "plugin.js"
+  }, {
     external: ["postcss"],
   }),
-  mkConfig("src/index.js", "index.js", {
-    external: path => path.includes("inline-style-prefixer/static"),
+  mkConfig("src/index.js", {
+    file: "index.js",
     exports: "named",
+  }, {
+    external: path => path.includes("inline-style-prefixer/static"),
   }),
 ]
 
 function runOne(config) {
-  const file = config.dest
+  const file = config.output.file
   return rollup.rollup(config)
-    .then(bundle => bundle.write(config))
+    .then(bundle => bundle.write(config.output))
     .then(res => {
       const stat = fs.statSync(file)
       const size = Math.ceil(stat.size / 1024)

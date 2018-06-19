@@ -45,24 +45,24 @@
     ]
   },
   "devDependencies": {
-    "babel-core": "^6.24.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-istanbul": "^4.1.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
-    "babel-preset-latest": "^6.24.0",
-    "babel-register": "^6.24.0",
+    "babel-plugin-istanbul": "^4.1.6",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "chai": "^3.5.0",
     "eslint": "^3.18.0",
     "eslint-config-swatinem": "^3.0.0",
     "mocha": "^3.2.0",
-    "nyc": "^10.2.0",
-    "rollup": "^0.41.6",
-    "rollup-plugin-babel": "^2.7.1"
+    "nyc": "^12.0.2",
+    "rollup": "^0.60.7",
+    "rollup-plugin-babel": "^3.0.4"
   },
   "dependencies": {
     "caniuse-api": "^2.0.0",
-    "inline-style-prefixer": "^4.0.0",
-    "postcss": "^6.0.16",
-    "source-map-support": "^0.5.3"
+    "inline-style-prefixer": "^4.0.2",
+    "postcss": "^6.0.22",
+    "source-map-support": "^0.5.6"
   }
 }
