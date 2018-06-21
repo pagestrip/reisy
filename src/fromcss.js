@@ -18,6 +18,7 @@ function convertRoot(root) {
     const {type} = n
     const global = {
       deps: new Set(),
+      refs: new Set(),
       ns,
     }
     if (type === "comment" ||
@@ -56,8 +57,9 @@ function convertRoot(root) {
       fonts[name].defs.push(value.defs)
       continue
     }
-    nodes.push(node(ns, name, [...global.deps], value))
+    nodes.push(node(ns, name, [...global.deps], value, [...global.refs]))
     global.deps.clear()
+    global.refs.clear()
   }
   finishFonts()
   return {
@@ -146,14 +148,26 @@ function makeDep(global, str) {
   return dep
 }
 
+function makeRef(global, str) {
+  const ref = str.includes(".")
+    ? str
+    : `${global.ns}.${str}`
+  global.refs.add(ref)
+  return ref
+}
+
 const RE_INTERP = /\$(\()?(\w+(?:\.\w+)?)([^\w])?/g
 function processInterpolation(global, str) {
   const frags = []
   let match
   let lastIndex = 0
-  while ((match = RE_INTERP.exec(str))) {
+  while ((match = RE_INTERP.exec(str))) { //check for references -> e.g. $(Foo.Bar)
     frags.push(str.substring(lastIndex, match.index))
-    frags.push(makeDep(global, match[2]))
+    if (match.index < str.indexOf('&')) { // if the reference happens before the selfreference there is no need for a dependency
+      frags.push(makeRef(global, match[2]))
+    } else {
+      frags.push(makeDep(global, match[2]))
+    }
     lastIndex = match.index + match[0].length - 1
     if (!match[3] || (match[3] === ")" && match[1] === "(")) {
       lastIndex += 1

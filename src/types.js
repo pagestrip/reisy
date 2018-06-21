@@ -34,9 +34,10 @@ export function font(...defs) {
   }
 }
 
-export function node(ns, name, deps, def) {
+export function node(ns, name, deps, def, refs) {
   return {
     ns, name,
     deps, def,
+    refs,
   }
 }

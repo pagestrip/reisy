@@ -3,6 +3,8 @@ import {decl} from "./types.js"
 import prefix from "./prefix.js"
 import toposort from "./toposort.js"
 
+const RRMATCH = /(__rreq__[0-9]+)/g;
+
 class Processor {
   constructor() {
     this.nodes = []
@@ -12,11 +14,14 @@ class Processor {
     this.prefix = ""
     this.rules = null
     this.registry = null
+    this.registryRequests = [];
+    this.registryRequestCount = 0;
   }
 
   resolve() {
     this.rules = []
     this.registry = {}
+    this.registryRequests = []
 
     // 1. apply overrides
     let nodes = {}
@@ -34,9 +39,12 @@ class Processor {
 
     const {rules} = this
 
-    // 3.5: prefix all the rules
+    // 3.5: prefix all the rules and resolve open registry requests
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
+      rule.selector = rule.selector.replace(RRMATCH, m => {
+        return interpolatedValue(this.registry[this.registryRequests[m]]);
+      });
       rule.def = prefix(rule.def)
     }
 
@@ -82,8 +90,20 @@ class Processor {
     }
     return parts.map((part, i) => i % 2 === 0
       ? String(part)
-      : interpolatedValue(this.registry[part])
+      : interpolatedValue(this.getFromRegistry(part))
     ).join("").trim()
+  }
+
+  getFromRegistry(key) {
+    const data = this.registry[key];
+    if (data !== undefined) {
+      return data;
+    } else {
+      this.registryRequestCount++;
+      const value = `__rreq__${this.registryRequestCount}`;
+      this.registryRequests[value] = key;
+      return {value}
+    }
   }
 
   processNode(node) {
