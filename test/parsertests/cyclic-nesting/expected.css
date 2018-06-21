@@ -1,0 +1,14 @@
+.Bug-Child {
+  width: 100px;
+  height: 100px;
+  background: purple;
+}
+.Bug-SomeComponent:first-child .Bug-Child {
+  outline: 3px solid red;
+}
+.Bug-SomeComponent {
+  position: fixed;
+}
+.Bug-SomeComponent .Bug-Child {
+  background: blue;
+}

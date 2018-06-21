@@ -1,0 +1,17 @@
+@namespace Bug;
+SomeComponent {
+  position: fixed;
+
+  & $Child {
+    background: blue;
+  }
+}
+Child {
+  width: 100px;
+  height: 100px;
+  background: purple;
+
+  $SomeComponent:first-child & {
+    outline: 3px solid red;
+  }
+}
