@@ -163,7 +163,7 @@ function processInterpolation(global, str) {
   let lastIndex = 0
   while ((match = RE_INTERP.exec(str))) { //check for references -> e.g. $(Foo.Bar)
     frags.push(str.substring(lastIndex, match.index))
-    if (match.index < str.indexOf('&')) { // if the reference happens before the selfreference there is no need for a dependency
+    if (match.index < str.indexOf("&")) { // if the reference happens before the selfreference there is no need for a dependency
       frags.push(makeRef(global, match[2]))
     } else {
       frags.push(makeDep(global, match[2]))

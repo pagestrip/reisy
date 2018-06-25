@@ -18,7 +18,7 @@ const plugins = () => [
 
 function mkConfig(input, output, options) {
   const config = Object.assign({
-    input, 
+    input,
     output: Object.assign({
       sourcemap: true,
       format: "cjs",
@@ -37,7 +37,7 @@ const configs = [
   // XXX: use this via require in cli and plugin once rollup supports code
   // splitting!
   mkConfig("src/parser.js", {
-    file: "parser.js"
+    file: "parser.js",
   }, {
     external: ["postcss"],
   }),
@@ -48,7 +48,7 @@ const configs = [
     external: ["fs", "path", "postcss"],
   }),
   mkConfig("src/plugin.js", {
-    file: "plugin.js"
+    file: "plugin.js",
   }, {
     external: ["postcss"],
   }),
