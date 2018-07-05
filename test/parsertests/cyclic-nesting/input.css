@@ -13,5 +13,9 @@ Child {
 
   $SomeComponent:first-child & {
     outline: 3px solid red;
+
+    @media(max-width: 100px) {
+      outline: 0;
+    }
   }
 }

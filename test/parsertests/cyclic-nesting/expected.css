@@ -6,6 +6,11 @@
 .Bug-SomeComponent:first-child .Bug-Child {
   outline: 3px solid red;
 }
+@media (max-width: 100px) {
+  .Bug-SomeComponent:first-child .Bug-Child {
+    outline: 0;
+  }
+}
 .Bug-SomeComponent {
   position: fixed;
 }

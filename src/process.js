@@ -43,6 +43,13 @@ class Processor {
     for (let i = 0; i < rules.length; i++) {
       const rule = rules[i]
       rule.selector = rule.selector.replace(RRMATCH, m => interpolatedValue(this.registry[this.registryRequests[m]]))
+      Object.keys(rule.def).forEach(k => {
+        const nk = k.replace(RRMATCH, m => interpolatedValue(this.registry[this.registryRequests[m]]));
+        if (nk !== k) {
+          rule.def[nk] = rule.def[k];
+          delete rule.def[k];
+        }
+      })
       rule.def = prefix(rule.def)
     }
 
