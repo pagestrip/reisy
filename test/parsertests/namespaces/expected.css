@@ -1,3 +1,6 @@
 .Header-Container {
   margin: 0;
 }
+.Sub-Wrapper .Header-Container {
+  margin: 10px;
+}

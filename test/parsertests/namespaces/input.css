@@ -7,3 +7,11 @@ Foo: Foo;
 Container {
   margin: 0;
 }
+
+@namespace Sub;
+
+Wrapper {
+	$Header.Container {
+		margin: 10px;
+	}
+}
