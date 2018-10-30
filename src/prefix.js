@@ -1,20 +1,20 @@
 /* eslint-disable */
-import createPrefixer from "inline-style-prefixer/static/createPrefixer"
+import {createPrefixer} from "inline-style-prefixer"
 
 /* run `npm run static` to regenerate these settings */
 
-import calc from 'inline-style-prefixer/static/plugins/calc'
-import crossFade from 'inline-style-prefixer/static/plugins/crossFade'
-import cursor from 'inline-style-prefixer/static/plugins/cursor'
-import filter from 'inline-style-prefixer/static/plugins/filter'
-import flex from 'inline-style-prefixer/static/plugins/flex'
-import flexboxIE from 'inline-style-prefixer/static/plugins/flexboxIE'
-import flexboxOld from 'inline-style-prefixer/static/plugins/flexboxOld'
-import gradient from 'inline-style-prefixer/static/plugins/gradient'
-import imageSet from 'inline-style-prefixer/static/plugins/imageSet'
-import position from 'inline-style-prefixer/static/plugins/position'
-import sizing from 'inline-style-prefixer/static/plugins/sizing'
-import transition from 'inline-style-prefixer/static/plugins/transition'
+import calc from 'inline-style-prefixer/lib/plugins/calc'
+import crossFade from 'inline-style-prefixer/lib/plugins/crossFade'
+import cursor from 'inline-style-prefixer/lib/plugins/cursor'
+import filter from 'inline-style-prefixer/lib/plugins/filter'
+import flex from 'inline-style-prefixer/lib/plugins/flex'
+import flexboxIE from 'inline-style-prefixer/lib/plugins/flexboxIE'
+import flexboxOld from 'inline-style-prefixer/lib/plugins/flexboxOld'
+import gradient from 'inline-style-prefixer/lib/plugins/gradient'
+import imageSet from 'inline-style-prefixer/lib/plugins/imageSet'
+import position from 'inline-style-prefixer/lib/plugins/position'
+import sizing from 'inline-style-prefixer/lib/plugins/sizing'
+import transition from 'inline-style-prefixer/lib/plugins/transition'
 var w = ["Webkit"];
 var m = ["Moz"];
 var ms = ["ms"];

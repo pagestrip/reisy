@@ -60,9 +60,9 @@
     "rollup-plugin-babel": "^3.0.4"
   },
   "dependencies": {
-    "caniuse-api": "^2.0.0",
-    "inline-style-prefixer": "^4.0.2",
-    "postcss": "^6.0.22",
-    "source-map-support": "^0.5.6"
+    "caniuse-api": "^3.0.0",
+    "inline-style-prefixer": "^5.0.3",
+    "postcss": "^7.0.5",
+    "source-map-support": "^0.5.9"
   }
 }
