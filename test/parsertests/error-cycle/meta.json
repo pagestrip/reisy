@@ -1,6 +1,6 @@
 {
-  "name": "error when specifying a circular dependency",
-  "errors": [
+  "name": "warning when specifying a circular dependency",
+  "warnings": [
     "reisy: Node \"Foo.Foo\" is part of a cyclic dependency."
   ],
   "namespaces": {

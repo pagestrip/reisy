@@ -22,7 +22,7 @@ function visit(sorted, nodes, marks, key) {
     return
   }
   if (marks[key] === TEMP) {
-    console.error(new Error(`reisy: Node "${key}" is part of a cyclic dependency.`))
+    console.warn(`reisy: Node "${key}" is part of a cyclic dependency.`)
   }
   if (marks[key]) {
     return
