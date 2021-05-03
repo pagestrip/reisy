@@ -1,6 +1,6 @@
 {
   "name": "reisy",
-  "version": "1.6.0-rc2",
+  "version": "1.6.0-rc3",
   "description": "runtime extendable inline styles",
   "main": "index.js",
   "modules.root": "src",
