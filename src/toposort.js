@@ -18,11 +18,15 @@ function toposort(nodes) {
 function visit(sorted, nodes, marks, key) {
   const node = nodes[key]
   if (!node) {
-    console.error(new Error(`reisy: Invalid dependency on "${key}". A typo maybe?`))
+    if (process.env.NODE_ENV !== "production") {
+      console.error(new Error(`reisy: Invalid dependency on "${key}". A typo maybe?`))
+    }
     return
   }
   if (marks[key] === TEMP) {
-    console.warn(`reisy: Node "${key}" is part of a cyclic dependency.`)
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`reisy: Node "${key}" is part of a cyclic dependency.`)
+    }
   }
   if (marks[key]) {
     return
